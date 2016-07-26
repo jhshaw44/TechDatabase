@@ -6,7 +6,7 @@
 	<% end %>
 
 
-<table>
+<table border ="1" width =100%>
   <thead>
     <tr>
         <% @columns = @data.column_names %>
@@ -27,8 +27,6 @@
           <%= datum[col] %>
         </td>
         <% end %>
-        <td><%= datum.number %></td>
-        <td><%= datum.name %></td>
         <td><%= link_to 'Show', datum %></td>
         <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
         <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
