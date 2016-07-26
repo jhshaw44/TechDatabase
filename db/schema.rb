@@ -19,18 +19,18 @@ ActiveRecord::Schema.define(version: 20160726004301) do
   create_table "data", id: false, force: true do |t|
     t.integer "number",                                   limit: 2,   null: false
     t.string  "name",                                     limit: 300
-    t.string  "CLN",                                      limit: 300
-    t.string  "Grades Served",                            limit: 300
-    t.string  "School Address",                           limit: 300
-    t.integer "School ZIP"
-    t.string  "School Phone",                             limit: 300
-    t.string  "Principal Last Name",                      limit: 300
-    t.string  "Principal First Name",                     limit: 300
-    t.string  "Principal Email",                          limit: 254
-    t.string  "ILED First Name",                          limit: 300
-    t.string  "ILED Last Name",                           limit: 300
-    t.string  "Senior ILED First Name",                   limit: 300
-    t.string  "Senior ILED Last Name",                    limit: 300
+    t.string  "cln",                                      limit: 300
+    t.string  "grades_served",                            limit: 300
+    t.string  "school_address",                           limit: 300
+    t.integer "school_zip"
+    t.string  "school_phone",                             limit: 300
+    t.string  "principal_last_name",                      limit: 300
+    t.string  "principal_first_name",                     limit: 300
+    t.string  "principal_email",                          limit: 254
+    t.string  "iled_first_name",                          limit: 300
+    t.string  "iled_last_name",                           limit: 300
+    t.string  "senior_iled_first_name",                   limit: 300
+    t.string  "senior_iled_last_name",                    limit: 300
     t.string  "Math ACL First Name",                      limit: 300
     t.string  "Math ACL Last Name",                       limit: 300
     t.string  "Literacy ACL First Name",                  limit: 300
