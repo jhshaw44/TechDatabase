@@ -5,18 +5,28 @@
 		<%= submit_tag "Search" %>
 	<% end %>
 
+
 <table>
   <thead>
     <tr>
-      <th>Number</th>
-      <th>Name</th>
-      <th colspan="3"></th>
+        <% @columns = @data.column_names %>
+        <% @columns.each do |col| %>
+        <th>
+          <%= col %>
+        </th>
+        <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @data.each do |datum| %>
       <tr>
+        <% @columns = @data.column_names %>
+        <% @columns.each do |col| %>
+        <td>
+          <%= datum[col] %>
+        </td>
+        <% end %>
         <td><%= datum.number %></td>
         <td><%= datum.name %></td>
         <td><%= link_to 'Show', datum %></td>
