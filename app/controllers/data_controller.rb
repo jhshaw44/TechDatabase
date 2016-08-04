@@ -84,7 +84,6 @@ class DataController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def datum_params
-
-      params.require(:datum).permit(:CLN, :name)
+      params.require(:datum).permit!
     end
 end

@@ -2,7 +2,7 @@
 
 <!-- Code for the category combobox, search bar, and search button -->
 	<%= form_tag data_path, :method => 'get' do %>
-    <%= collection_select :Search_Group, :select, SearchGroup.all.order(:group_name), :children_columns, :group_name, { include_blank: 'School Profile'}  %>
+    <%= collection_select :Search_Group, :select, Datum.all.order(:"School Name"), :"School Name", :"School Number", { include_blank: 'School Profile'}  %>
 		<%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number" %>
 		<%= submit_tag "Search" %>
 	<% end %>
@@ -23,7 +23,8 @@
   </thead>
 
   <!-- Prints all the information in each cell for each row (displays an entire record) -->
-  <tbody>
+  <tbody> 
+    <% @data = @data.order('"School Number"') %>
     <% @data.each do |datum| %>
       <tr>
         <% @columns = @data.column_names %>
