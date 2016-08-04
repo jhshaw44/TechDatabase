@@ -69,6 +69,7 @@ class DataController < ApplicationController
   # DELETE /data/1
   # DELETE /data/1.json
   def destroy
+    @datum = Datum.find(params[:id])
     @datum.destroy
     respond_to do |format|
       format.html { redirect_to data_url, notice: 'Datum was successfully destroyed.' }
