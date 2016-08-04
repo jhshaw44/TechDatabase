@@ -4,7 +4,7 @@ class DataController < ApplicationController
   # GET /data
   # GET /data.json
   def index
-    @search_params = ""
+  	@search_params = ""
     @columns = Datum.column_names 
 
     @columns.each do |col| 
@@ -18,8 +18,14 @@ class DataController < ApplicationController
 
     key = "%#{params[:search]}%"
 
-    @data = Datum.where(@search_params, search: key)
+
+	@data = Datum.where(['"School Name" LIKE ?', "%#{params[:search]}%"])
+	
+	
+    #@data = Datum.where(@search_params, search: key)
     #@data = Datum.where([@search_params,"%#{params[:search]}%"])
+	
+	
   end
 
   # GET /data/1

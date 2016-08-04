@@ -1,5 +1,10 @@
 <h1>Listing data</h1>
 
+	<%= form_tag data_path, :method => 'get' do %>
+ 		<%= text_field_tag :search, params[:search] %>
+ 		<%= submit_tag "Search" %>
+ 	<% end %>
+
 <!-- Code for the category combobox, search bar, and search button -->
 	<%= form_tag data_path, :method => 'get' do %>
     <%= collection_select :Search_Group, :select, SearchGroup.all.order(:group_name), :children_columns, :group_name, { include_blank: 'School Profile'}  %>
