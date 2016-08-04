@@ -6,14 +6,25 @@
  	<% end %>
 
 <!-- Code for the category combobox, search bar, and search button -->
-	<%= form_tag data_path, :method => 'get' do %>
+  <%= form_tag data_path, :method => 'get', enforce_utf8: true do %>
     <%= collection_select :Search_Group, :select, SearchGroup.all.order(:group_name), :children_columns, :group_name, { include_blank: 'School Profile'}  %>
-		<%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number" %>
-		<%= submit_tag "Search" %>
-	<% end %>
+    <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+
+<script>
+  function checkStatus() {
+    if (document.getElementById("searchBar").value != "") {
+      document.getElementById("resultsTable").style.visibility = "visible";      
+    }
+  }
+
+  window.onload = checkStatus;
+</script>
 
 <!-- Code for the table displaying the search results -->
-<table border ="1" width =100%>
+<table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
 
   <!-- Prints all the columns -->
   <thead>
