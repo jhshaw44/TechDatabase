@@ -11,14 +11,17 @@
     </div>
   <% end %>
 
+  <% @columns = Datum.column_names %>
+  <% @columns.each do |col| %>
+  <% display = "#{col}" %>
+
   <div class="field">
-    <%= f.label :"School Number" %><br>
-    <%= f.number_field :"School Number" %>
+      <%= f.label :display, display %><br>
+      <%= f.text_field col %>
   </div>
-  <div class="field">
-    <%= f.label :"School Name" %><br>
-    <%= f.text_field :"School Name" %>
-  </div>
+
+<% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

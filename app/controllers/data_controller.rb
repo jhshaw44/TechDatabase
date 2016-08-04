@@ -4,23 +4,22 @@ class DataController < ApplicationController
   # GET /data
   # GET /data.json
   def index
+    @search_params = ""
+    @columns = Datum.column_names 
 
-        @search_params = ""
-        @columns = Datum.column_names 
+    @columns.each do |col| 
+      col = "\'#{col}\'"
+      @search_params = @search_params + 'OR ' + col + ' LIKE ? '
+    end
 
-        @columns.each do |col| 
-          @search_params = @search_params + "OR " + col + " LIKE ? "
-        end
-        # chops off the first OR from the string after the joined search parameters are done
-        # adds "OR column_name LIKE ?" for each column
-        @search_params = @search_params.byteslice(3, -1)
-
+    # chops off the first OR from the string after the joined search parameters are done
+    # adds "OR column_name LIKE ?" for each column
+    @search_params = @search_params[3, -1]
 
     key = "%#{params[:search]}%"
 
-    @data = Datum.where(@search_params, search: key).order(:name)
-    # @data = Datum.where([@search_params,"%#{params[:search]}%"])
-	
+    @data = Datum.where(@search_params, search: key)
+    #@data = Datum.where([@search_params,"%#{params[:search]}%"])
   end
 
   # GET /data/1
@@ -85,6 +84,7 @@ class DataController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def datum_params
+
       params.require(:datum).permit(:CLN, :name)
     end
 end

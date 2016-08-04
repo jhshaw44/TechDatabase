@@ -1,14 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Number:</strong>
-  <%= @datum.number %>
-</p>
+<!--
+This code loops through all the information for each column for the given datum and displays
+it as a list going down the page
+-->
+<% @columns = Datum.column_names %>
+<% @columns.each do |col| %>
+	<p>
+   		<strong>
+   		<%= col %>:
+   		</strong>
+   		<%= @datum[col] %>
+	</p>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @datum.name %>
-</p>
 
 <%= link_to 'Edit', edit_datum_path(@datum) %> |
 <%= link_to 'Back', data_path %>

@@ -1,12 +1,16 @@
 <h1>Listing data</h1>
 
+<!-- Code for the category combobox, search bar, and search button -->
 	<%= form_tag data_path, :method => 'get' do %>
-		<%= text_field_tag :search, params[:search] %>
+    <%= collection_select :Search_Group, :select, SearchGroup.all.order(:group_name), :children_columns, :group_name, { include_blank: 'School Profile'}  %>
+		<%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number" %>
 		<%= submit_tag "Search" %>
 	<% end %>
 
-
+<!-- Code for the table displaying the search results -->
 <table border ="1" width =100%>
+
+  <!-- Prints all the columns -->
   <thead>
     <tr>
         <% @columns = @data.column_names %>
@@ -18,6 +22,7 @@
     </tr>
   </thead>
 
+  <!-- Prints all the information in each cell for each row (displays an entire record) -->
   <tbody>
     <% @data.each do |datum| %>
       <tr>
@@ -27,6 +32,8 @@
           <%= datum[col] %>
         </td>
         <% end %>
+
+        <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
         <td><%= link_to 'Show', datum %></td>
         <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
         <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
