@@ -1,19 +1,17 @@
 Rails.application.routes.draw do
   
-  root 'static_pages#home'
-  #root 'sessions#new'
-  get 'static_pages/home'
+  get 'startup/index'
+  root to: 'startup#index'
 
   get 'signup'=> 'users#new'
   resources :users 
   
-  get '/login' =>'sessions#new'
+  get "log_out" => "sessions#destroy", :as => "log_out"
+  get "log_in" => "sessions#new", :as => "log_in"
+  resources :sessions
+ # get '/login' =>'sessions#new'
   post 'login' => 'sessions#create'
+
   
-  delete '/logout' => 'sessions#destroy'
-  
-  
- 
-  
- 
+
 end
