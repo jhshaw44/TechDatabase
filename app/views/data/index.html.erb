@@ -1,4 +1,20 @@
-<h1>Listing data</h1>
+<!-- Makes background -->
+<body style="background-color:#D3D3D3;">
+<style>
+header {
+    padding: 1em;
+    color: black;
+    background-color: #D3D3D3;
+    clear: left;
+    text-align: center;
+}
+</style>
+
+<!-- Makes title -->
+<header>
+   <h1>Baltimore City Public Schools</h1>
+   <h2>School Information Search</h2>
+</header>
 
 	<%= form_tag data_path, :method => 'get' do %>
  		<%= text_field_tag :search, params[:search] %>
@@ -23,25 +39,63 @@
   window.onload = checkStatus;
 </script>
 
-<!-- Code for the table displaying the search results -->
-<table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
 
-  <!-- Prints all the columns -->
-  <thead>
-    <tr>
+<!-- Sets up look of table -->
+<html>
+  <head>
+    <style>
+      #resultsTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: separate;
+        width: 100%;
+        border:solid #008080 1px;
+        border-radius:6px;
+      }
+
+      #resultsTable  th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: #008080;
+        color: white;
+        border-top: none;
+      }
+
+      #resultsTable td {
+        text-align: center;
+      }
+
+      #resultsTable td:first-child {
+        border-left: none;
+      }
+
+      #resultsTable td, #resultsTable th {
+        border: 0px solid #ddd;
+        padding: 8px;
+      }
+
+      #resultsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+      #resultsTable tr:hover {background-color: #ddd;}
+
+
+    </style>
+  </head>
+  <body>
+
+    <!-- Code for the table displaying the search results -->
+    <table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
+
+      <tr>
         <% @columns = @data.column_names %>
         <% @columns.each do |col| %>
         <th>
           <%= col %>
         </th>
         <% end %>
-    </tr>
-  </thead>
-
-  <!-- Prints all the information in each cell for each row (displays an entire record) -->
-  <tbody> 
-    <% @data = @data.order('"School Number"') %>
-    <% @data.each do |datum| %>
+      </tr>
+      <% @data = @data.order('"School Number"') %>
+      <% @data.each do |datum| %>
       <tr>
         <% @columns = @data.column_names %>
         <% @columns.each do |col| %>
@@ -53,12 +107,12 @@
         <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
         <td><%= link_to 'Show', datum %></td>
         <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
-        <td><%= button_to 'Destroy', datum,  method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+      <% end %>
+    </table>
+  </body>
+</html>
 <br>
 
 <%= link_to 'New Datum', new_datum_path %>
