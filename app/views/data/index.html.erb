@@ -9,14 +9,6 @@ header {
     text-align: center;
 }
 
-
-#links {
-
-  position: relative;
-  left: -220px;
-  bottom: 20px;
-}
-
 </style>
 
 <!-- Makes title -->
@@ -103,6 +95,8 @@ header {
     </style>
   </head>
   <body>
+    <%= button_to 'New Datum', new_datum_path %>
+    <br>
 
     <!-- Code for the table displaying the search results -->
     <table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
@@ -125,9 +119,9 @@ header {
 
             <div id = "links" >
               <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
-              <td><%= link_to 'Show', datum %></td>
-              <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
-              <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= button_to 'Show', datum %></td>
+              <td><%= button_to 'Edit', edit_datum_path(datum) %></td>
+              <td><%= button_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </div>
 
             <% @columns.each do |cell| %>
@@ -142,4 +136,3 @@ header {
 </html>
 <br>
 
-<%= link_to 'New Datum', new_datum_path %>
