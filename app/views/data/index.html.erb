@@ -16,18 +16,15 @@ header {
    <h2>School Information Search</h2>
 </header>
 
-	<%= form_tag data_path, :method => 'get' do %>
- 		<%= text_field_tag :search, params[:search] %>
- 		<%= submit_tag "Search" %>
- 	<% end %>
-
+<center>
 <!-- Code for the category combobox, search bar, and search button -->
-  <%= form_tag data_path, :method => 'get', enforce_utf8: true do %>
-    <%= collection_select :Search_Group, :select, SearchGroup.all.order(:group_name), :children_columns, :group_name, { include_blank: 'School Profile'}  %>
-    <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
-    <%= submit_tag "Search" %>
-  <% end %>
-
+<%= form_tag data_path, :method => 'get', enforce_utf8: true do %>
+  <%= collection_select :Search_Group, :select, SearchGroup.all.order(:group_name), :children_columns, :group_name, { include_blank: 'School Profile'}  %>
+  <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+</center>
+<br>
 
 <script>
   function checkStatus() {
@@ -86,29 +83,29 @@ header {
     <!-- Code for the table displaying the search results -->
     <table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
 
+      <!-- prints the column names for top of the table -->
       <tr>
-        <% @columns = @data.column_names %>
         <% @columns.each do |col| %>
         <th>
           <%= col %>
         </th>
         <% end %>
       </tr>
-      <% @data = @data.order('"School Number"') %>
+      <%= @columns %>
       <% @data.each do |datum| %>
-      <tr>
-        <% @columns = @data.column_names %>
-        <% @columns.each do |col| %>
-        <td>
-          <%= datum[col] %>
-        </td>
-        <% end %>
+        <tr>
 
-        <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
-        <td><%= link_to 'Show', datum %></td>
-        <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
-        <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+            <% @columns.each do |cell| %>
+              <td>
+                <%= datum[cell] %>
+              </td>
+            <% end %>
+
+          <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
+          <td><%= link_to 'Show', datum %></td>
+          <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
+          <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
       <% end %>
     </table>
   </body>

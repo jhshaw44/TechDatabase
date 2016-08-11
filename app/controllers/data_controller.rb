@@ -4,24 +4,78 @@ class DataController < ApplicationController
   # GET /data
   # GET /data.json
   def index
-  	@search_params = ""
+
+# broken code for dynamic searching of all columns  	
+=begin
+  	@sql_query = "SELECT * FROM data WHERE ("
     @columns = Datum.column_names 
 
+    @results = ""
+
+    # Builds the query one column at a time for the 1 search parameter
+    # SELECT * FROM data WHERE (col LIKE '%search%' OR col2 LIKE '%search%' OR ...)
     @columns.each do |col| 
-      col = "\'#{col}\'"
-      @search_params = @search_params + 'OR ' + col + ' LIKE ? '
+      col = "\"#{col}\""
+      #@sql_query = @sql_query + 'OR ' + col + ' LIKE ? '
+      @sql_query = @sql_query + "#{col} LIKE '%#{params[:search]}%' OR "
     end
 
-    # chops off the first OR from the string after the joined search parameters are done
-    # adds "OR column_name LIKE ?" for each column
-    @search_params = @search_params[3, -1]
+    # chops off the last OR from the string after the entire query is done
+    # adds the final closing parenthesis on the end
+    @sql_query = @sql_query[0, -4]
 
-    key = "%#{params[:search]}%"
+=end
 
 
-	@data = Datum.where(['"School Name" LIKE ?', "%#{params[:search]}%"])
+	@columns = Datum.column_names
+
+	# Credits to http://www.korenlc.com/creating-a-simple-search-in-rails-4/ for getting us started
+
+	@data = nil
+
+	if params[:search]
+
+		if params[:Search_Group]
+
+			columns_string = params[:Search_Group].to_s
+			@columns = columns_string
+
+			if columns_string.length > 15
+				col_array = []
+				columns_string = columns_string[12..-3]
+
+				@columns = columns_string.split(", ")
+				#@columns = col_array
+
+			else				
+				@columns = Datum.column_names
+			end
+
+		else
+			@columns = Datum.column_names
+		end
+
+		# we never want to show the id, this is strictly for our database
+		index = @columns.find_index("id")
+		if index
+			@columns.delete_at(index)
+		end
+
+		@data = Datum.search(params[:search], @columns)
+	else
+		@data = Datum.all
+	end
+
+
+
+    # Code to test
+
+    #search = "\"School Name\""
+	#@data = Datum.where([search + ' LIKE ?', "%#{params[:search]}%"])
+	#@data = Datum.where(['"School Name" LIKE ?', "%#{params[:search]}%"])
 	
-	
+	#@search_params = "\"School Name\" LIKE ? OR \"School Number\" LIKE ?"
+
     #@data = Datum.where(@search_params, search: key)
     #@data = Datum.where([@search_params,"%#{params[:search]}%"])
 	
