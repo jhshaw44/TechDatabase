@@ -5,34 +5,9 @@ class DataController < ApplicationController
   # GET /data.json
   def index
 
-# broken code for dynamic searching of all columns  	
-=begin
-  	@sql_query = "SELECT * FROM data WHERE ("
-    @columns = Datum.column_names 
-
-    @results = ""
-
-    # Builds the query one column at a time for the 1 search parameter
-    # SELECT * FROM data WHERE (col LIKE '%search%' OR col2 LIKE '%search%' OR ...)
-    @columns.each do |col| 
-      col = "\"#{col}\""
-      #@sql_query = @sql_query + 'OR ' + col + ' LIKE ? '
-      @sql_query = @sql_query + "#{col} LIKE '%#{params[:search]}%' OR "
-    end
-
-    # chops off the last OR from the string after the entire query is done
-    # adds the final closing parenthesis on the end
-    @sql_query = @sql_query[0, -4]
-
-=end
-
-
 	@columns = Datum.column_names
 
-	# Credits to http://www.korenlc.com/creating-a-simple-search-in-rails-4/ for getting us started
-
 	@data = nil
-
 	if params[:search]
 
 		if params[:Search_Group]
@@ -65,20 +40,6 @@ class DataController < ApplicationController
 	else
 		@data = Datum.all
 	end
-
-
-
-    # Code to test
-
-    #search = "\"School Name\""
-	#@data = Datum.where([search + ' LIKE ?', "%#{params[:search]}%"])
-	#@data = Datum.where(['"School Name" LIKE ?', "%#{params[:search]}%"])
-	
-	#@search_params = "\"School Name\" LIKE ? OR \"School Number\" LIKE ?"
-
-    #@data = Datum.where(@search_params, search: key)
-    #@data = Datum.where([@search_params,"%#{params[:search]}%"])
-	
 	
   end
 
