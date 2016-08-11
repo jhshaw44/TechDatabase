@@ -14,10 +14,12 @@ class DataController < ApplicationController
 
       my_id = params[:Search_Group][:group_id]
 
+      # if any of the groups are selected besides the blank
 			if my_id != ""
 
+        # look up the row with our ID, grab only the children columns, take the first index of the array, and then make an array out of the string
         @columns = SearchGroup.where(id: my_id).pluck(:children_columns)[0].split(", ")
-        
+
 			else				
 				@columns = Datum.column_names
 			end

@@ -19,7 +19,7 @@ header {
 <center>
 <!-- Code for the category combobox, search bar, and search button -->
 <%= form_tag data_path, :method => 'get', enforce_utf8: true do %>
-  <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile' } %>
+  <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: params[:Search_Group][:group_id] } %>
   <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
   <%= submit_tag "Search", :name => nil %>
 <% end %>
