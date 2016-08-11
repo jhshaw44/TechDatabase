@@ -1,19 +1,82 @@
 <p id="notice"><%= notice %></p>
 
-<!--
-This code loops through all the information for each column for the given datum and displays
-it as a list going down the page
--->
-<% @columns = Datum.column_names %>
-<% @columns.each do |col| %>
-	<p>
-   		<strong>
-   		<%= col %>:
-   		</strong>
-   		<%= @datum[col] %>
-	</p>
-<% end %>
+<!-- Makes background -->
+<body style="background-color:#D3D3D3;">
+<style>
+header {
+    padding: 1em;
+    color: black;
+    background-color: #D3D3D3;
+    clear: left;
+    text-align: center;
+}
+</style>
 
+<!-- Makes title -->
+<header>
+   <h1>Baltimore City Public Schools</h1>
+   <h2>School Information Search</h2>
+</header>
+
+
+<div class="boxed">
+	
+	<!-- Add all search groups to an array -->
+	<% @search_groups = [] %>
+	<% @all_columns = [] %>
+	<% for i in 1..8 %> <!-- HARDCODED - WILL NEED TO CHANGE -->
+		<% @search_groups.push(SearchGroup.where(id: i).pluck(:group_name)[0]) %>
+	<% end %>
+	<% @search_groups[0] = "Overview" %>
+	<!-- Print each search group, in larger green text  -->
+	
+  	<% for i in 0..7 %> <!-- HARDCODED - WILL NEED TO CHANGE -->
+  		<p>
+   			<strong>
+   				<div class="categories">
+   					<%= @search_groups[i] %>
+   				</div>	
+   		</p>
+   		<p>
+
+   				<!-- Print all child columns and their data  -->
+				<!-- Child_columns is an array of (strings separated by commas) -->
+				<% @child_columns = [] %>
+				<% @child_columns = SearchGroup.where(id: i+1).pluck(:children_columns)[0].split(", ") %>
+				<% if i+1 > 1 %>
+					<% @child_columns.delete_at(0) %>
+					<% @child_columns.delete_at(0) %>
+				<% end %>	
+				<% @j = 0 %>
+				<% while @j < @child_columns.length %>
+					<% if !@all_columns.include?(@child_columns[@j]) %>
+ 						<%= @child_columns[@j] + ": " %>
+						<% @all_columns.push(@child_columns[@j]) %>
+						<br>
+					<% end %>	
+					<% @j += 1 %>
+					<br> 
+				<% end %>
+
+	<% end %>	
+		</p>		
+</div> 
+
+<style>
+	.boxed {
+  		border: 1px solid green ;
+  		background-color: white;
+  		font-size: 75%;
+	}	 
+
+	.categories {
+		font-size: 125%;
+		color: #43CD80;
+	}
+	p {
+		line-height: 60%;
+	}
+</style>
 
 <%= link_to 'Edit', edit_datum_path(@datum) %> |
 <%= link_to 'Back', data_path %>
