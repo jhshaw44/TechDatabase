@@ -9,12 +9,12 @@ header {
     text-align: center;
 }
 
-a {
-	
-	position: relative;
-	left: -220px;
-	bottom: 20px;
-	
+
+#links {
+
+  position: relative;
+  left: -220px;
+  bottom: 20px;
 }
 
 </style>
@@ -43,7 +43,9 @@ a {
   <%= submit_tag "Search", :name => nil %>
 <% end %>
 
-<a href= "http://localhost:3000">Home</a>
+<div id="homepage" >
+  <a href= "http://localhost:3000">Home</a>
+</div>
 
 </center>
 <br>
@@ -106,8 +108,11 @@ a {
     <table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
 
       <!-- prints the column names for top of the table -->
+      
       <tr>
-        <%= @colz %>
+      <th></th>
+      <th></th>
+      <th></th>
         <% @columns.each do |col| %>
         <th>
           <%= col %>
@@ -118,16 +123,18 @@ a {
       <% @data.each do |datum| %>
         <tr>
 
+            <div id = "links" >
+              <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
+              <td><%= link_to 'Show', datum %></td>
+              <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
+              <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </div>
+
             <% @columns.each do |cell| %>
               <td>
                 <%= datum[cell] %>
               </td>
             <% end %>
-
-          <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
-          <td><%= link_to 'Show', datum %></td>
-          <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
-          <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </table>
