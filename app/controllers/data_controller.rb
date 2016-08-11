@@ -12,20 +12,20 @@ class DataController < ApplicationController
 
 		if params[:Search_Group]
 
-			columns_string = params[:Search_Group].to_s
-			@columns = columns_string
+      my_id = params[:Search_Group][:group_id]
 
-			if columns_string.length > 15
-				col_array = []
-				columns_string = columns_string[12..-3]
+      # if any of the groups are selected besides the blank
+			if my_id != ""
 
-				@columns = columns_string.split(", ")
-				#@columns = col_array
+        # look up the row with our ID, grab only the children columns, take the first index of the array, and then make an array out of the string
+        @columns = SearchGroup.where(id: my_id).pluck(:children_columns)[0].split(", ")
 
 			else				
 				@columns = Datum.column_names
 			end
 
+
+      #@columns = Datum.column_names
 		else
 			@columns = Datum.column_names
 		end

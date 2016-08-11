@@ -6,7 +6,7 @@ class Datum < ActiveRecord::Base
 
 		# Chains each column to the sql query
 		columns.each do |col|
-			columns_string = columns_string + '' + "\"#{col}\"" + ' LIKE :test OR '
+			columns_string = columns_string + '' + "\"#{col}\"" + ' ILIKE :test OR '
 		end
 
 		# Cuts off the last ' OR '
