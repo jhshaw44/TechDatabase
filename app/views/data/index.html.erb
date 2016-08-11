@@ -95,7 +95,7 @@ header {
     </style>
   </head>
   <body>
-    <%= button_to 'New Datum', new_datum_path %>
+    <%= link_to 'New Datum', new_datum_path %>
     <br>
 
     <!-- Code for the table displaying the search results -->
@@ -119,8 +119,8 @@ header {
 
             <div id = "links" >
               <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
-              <td><%= button_to 'Show', datum %></td>
-              <td><%= button_to 'Edit', edit_datum_path(datum) %></td>
+              <td><%= link_to 'Show', datum %></td>
+              <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
               <td><%= button_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </div>
 
