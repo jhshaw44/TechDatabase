@@ -10,12 +10,13 @@ header {
     clear: left;
     text-align: center;
 }
+
 </style>
 
 <!-- Makes title -->
 <header>
    <h1>Baltimore City Public Schools</h1>
-   <h2>School Information Search</h2>
+   <h2>School Information Report</h2>
 </header>
 
 
@@ -43,28 +44,25 @@ header {
 				<!-- Child_columns is an array of (strings separated by commas) -->
 				<% @child_columns = [] %>
 				<% @child_columns = SearchGroup.where(id: i+1).pluck(:children_columns)[0].split(", ") %>
-				<% if i+1 > 1 %>
-					<% @child_columns.delete_at(0) %>
-					<% @child_columns.delete_at(0) %>
-				<% end %>	
-				<% @j = 0 %>
-				<% while @j < @child_columns.length %>
-					<% if !@all_columns.include?(@child_columns[@j]) %>
- 						<%= @child_columns[@j] + ": " %>
-						<% @all_columns.push(@child_columns[@j]) %>
-						<br>
-					<% end %>	
-					<% @j += 1 %>
-					<br> 
-				<% end %>
 
+
+				<% @child_columns.each do |col| %>
+					<% if !@all_columns.include?(col) %>
+ 						<%= col + ": " %>
+ 						<% @all_columns.push(col) %>	
+ 						<br>				
+ 					<% end %>			
+					<br>
+				<% end %>
+		</p>
 	<% end %>	
-		</p>		
+				
 </div> 
 
 <style>
 	.boxed {
   		border: 1px solid green ;
+  		border-radius: 5px;
   		background-color: white;
   		font-size: 75%;
 	}	 
@@ -72,9 +70,11 @@ header {
 	.categories {
 		font-size: 125%;
 		color: #43CD80;
+		padding-left: 5px;
 	}
 	p {
 		line-height: 60%;
+		padding-left: 5px;
 	}
 </style>
 
