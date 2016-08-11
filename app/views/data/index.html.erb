@@ -8,6 +8,15 @@ header {
     clear: left;
     text-align: center;
 }
+
+a {
+	
+	position: relative;
+	left: -220px;
+	bottom: 20px;
+	
+}
+
 </style>
 
 <!-- Makes title -->
@@ -23,6 +32,9 @@ header {
   <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
   <%= submit_tag "Search", :name => nil %>
 <% end %>
+
+<a href= "http://localhost:3000/data">Home</a>
+
 </center>
 <br>
 
