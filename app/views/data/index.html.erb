@@ -9,6 +9,8 @@ header {
     text-align: center;
 }
 
+
+
 </style>
 
 <!-- Makes title -->
@@ -48,9 +50,16 @@ header {
 
 <script>
   function checkStatus() {
-    if (document.getElementById("searchBar").value != "") {
-      document.getElementById("resultsTable").style.visibility = "visible";      
+    if (document.getElementById("searchBar").value == "") {
+      document.getElementById("resultsTable").style.display = "none";      
     }
+	
+	else {
+	
+		document.getElementById("resultsTable").style.visibility = "visible";
+	
+	}
+	
   }
 
   window.onload = checkStatus;
