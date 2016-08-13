@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'data#index'
   resources :data
-  resources :schools
+  resources :control_panel
 
   get 'welcome/homepage'
 

@@ -28,10 +28,13 @@ header {
 
 <!-- Back, Print, and CSV buttons -->
 <!-- Needed to put "back" button in link to get it to work" -->
+<div class="buttons">
 	<% @image_size = "75x75" %>
-	<a href="javascript:history.back()"><%= image_tag("back.png", :alt => "rss feed", :size => @image_size) %></a>
-	<%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size) %>
-	<%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size) %>
+
+	<a href="javascript:history.back()" onmouseover="this.style.cursor='pointer';"><%= image_tag("back.png", :alt => "Image Unavailable.", :size => @image_size) %></a>
+	<%= image_tag("printer.png", :alt => "Image Unavailable.", :onClick => "window.print()".html_safe, :size => @image_size,:onmouseover => "this.style.cursor='pointer';") %>
+	<%= image_tag("CSV.png", :alt => "Image Unavailable.", :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %>
+</div>	
 
 <div class="boxed">
 	

@@ -1,0 +1,233 @@
+<!-- Makes background -->
+<body style="background-color:#D3D3D3;">
+<style>
+header {
+    padding: 1em;
+    color: black;
+    background-color: #D3D3D3;
+    clear: left;
+    text-align: center;
+}
+
+
+#homepage {
+  position: relative;
+  /*margin-right: 800px;*/
+  /*margin-top: -90px;*/
+
+}
+
+#searchBar {
+
+width: 450px;
+
+    padding: 15px;
+
+    margin: 150px auto 50px auto;
+
+    background: #444;
+
+    background: rgba(0,0,0,.2);
+
+    border-radius: 10px;
+
+    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+}
+
+
+#roll {
+
+  padding: 15px;
+
+    margin: 150px auto 50px auto;
+
+    background: #444;
+
+    background: rgba(0,0,0,.2);
+
+    border-radius: 10px;
+
+    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+}
+
+#Header {
+}
+
+
+
+</style>
+
+<!-- Makes title -->
+<header>
+<br>
+<div id="Header">
+   <h1><em>Baltimore City Public Schools</em></h1>
+   <h2><em>School Information Search</em></h2>
+</div>
+</header>
+
+
+<center>
+
+
+<!-- Code for the category combobox, search bar, and search button -->
+<%= form_tag data_path, :method => 'get', enforce_utf8: true do %>
+
+  <% if params[:Search_Group] %>
+    <% if params[:Search_Group][:group_id] %>
+      <% @selected = params[:Search_Group][:group_id] %>
+    <% end %>
+    <% @selected = params[:Search_Group][:group_id] %>
+  <% else %>
+    <% @selected = "" %>
+  <% end %>
+
+  <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: @selected }, id: "roll" %>
+  <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
+  <%= image_submit_tag("search.png", :size => "25x25", id: "SearchButton", class: "search-img") %>
+
+  <!-- CSS for search button image -->
+  <style>
+    .search-img {
+      position: absolute;
+      margin-top: 160px;
+      width: 35px;
+      height: 35px;
+    }
+  </style>
+<% end %>
+
+<!-- Images and links "toolbar"-->
+<div id="homepage">
+  <% @image_size = "50x50" %>
+
+  <!-- Images -->
+  <a href="http://localhost:3000"><%= image_tag("home.png", :alt => "rss feed", :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %></a>
+    
+  <%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %>
+
+  <%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %>
+</div>
+
+<br>
+
+</center>
+<br>
+
+<script>
+  function checkStatus() {
+    if (document.getElementById("searchBar").value == "") {
+      document.getElementById("resultsTable").style.display = "none";      
+    }
+  
+    else {
+      document.getElementById("resultsTable").style.visibility = "visible";
+    }
+  
+  }
+
+  window.onload = checkStatus;
+</script>
+
+
+<!-- Sets up look of table -->
+<html>
+  <head>
+    <style>
+      #resultsTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: separate;
+        width: 100%;
+        border:solid #008080 1px;
+        border-radius:6px;
+      }
+
+      #resultsTable  th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: #008080;
+        color: white;
+        border-top: none;
+      }
+
+      #resultsTable td {
+        text-align: center;
+      }
+
+      #resultsTable td:first-child {
+        border-left: none;
+      }
+
+      #resultsTable td, #resultsTable th {
+        border: 0px solid #ddd;
+        padding: 8px;
+      }
+
+      #resultsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+      #resultsTable tr:hover {background-color: #ddd;}
+
+
+    </style>
+  </head>
+  <body>
+    New Datum <%= link_to(image_tag("add.png", :size => "25x25"), new_datum_path) %>
+    <br>
+    Control Panel <%= link_to(image_tag("settings.png", :size => "25x25"), "http://localhost:3000/control_panel") %>
+    <br>
+
+    <!-- Code for the table displaying the search results -->
+    <table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
+
+      <!-- prints the column names for top of the table -->
+      
+    <% if @data.pluck("School Number").length > 0 %>
+         
+      <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+        <% @columns.each do |col| %>
+        <th>
+          <%= col %>
+        </th>
+        <% end %>
+      </tr>
+      <%#= @columns %>
+      <% @data.each do |datum| %>
+        <tr>
+
+            <div id = "links" >
+              <!-- Appends the Show/Edit/Destroy options as hyperlinks -->
+              <td><%= link_to 'Show', datum %></td>
+              <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
+              <td><%= button_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </div>
+
+            <% @columns.each do |cell| %>
+              <td>
+                <%= datum[cell] %>
+              </td>
+            <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <center>
+      <%= "No Results Found." %>
+    </center>  
+  <% end %>    
+  
+<br>
+<center>
+<%= image_tag("QM.png", :alt => "rss feed",:size => "30x30") %>
+    <%= "Need help? Please contact" %> 
+    <a href="mailto:CitySchoolIT@bcps.k.12.md.us">CitySchoolIT@bcps.k.12.md.us</a>
+</center>
+
+  
+  </body>
+</html>
+<br>
+
