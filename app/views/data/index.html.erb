@@ -11,16 +11,13 @@ header {
 
 
 #homepage {
-
-	position: absolute;
-	margin-right: 800px;
-	margin-top: -90px;
-	
+  position: relative;
+	/*margin-right: 800px;*/
+	/*margin-top: -90px;*/
 
 }
 
 #searchBar {
-
 
 width: 450px;
 
@@ -35,9 +32,6 @@ width: 450px;
     border-radius: 10px;
 
     box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
-
-
-
 }
 
 
@@ -54,19 +48,9 @@ width: 450px;
     border-radius: 10px;
 
     box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
-
-
-
-
 }
 
-
 #Header {
-
-
-
-
-
 }
 
 
@@ -82,7 +66,10 @@ width: 450px;
 </div>
 </header>
 
+
 <center>
+
+
 <!-- Code for the category combobox, search bar, and search button -->
 <%= form_tag data_path, :method => 'get', enforce_utf8: true do %>
 
@@ -97,18 +84,30 @@ width: 450px;
 
   <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: @selected }, id: "roll" %>
   <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
-  <%= button_tag "Search", :name => nil, id: "SearchButton" %>
+  <%= image_submit_tag("search.png", :size => "25x25", id: "SearchButton", class: "search-img") %>
+
+  <!-- CSS for search button image -->
+  <style>
+    .search-img {
+      position: absolute;
+      margin-top: 160px;
+      width: 35px;
+      height: 35px;
+    }
+  </style>
 <% end %>
 
+<!-- Images and links "toolbar"-->
 <div id="homepage" >
-  <a href= "http://localhost:3000"><img src="http://icons.iconarchive.com/icons/iconshock/super-vista-general/256/home-icon.png" width = "40" height = "35"/></a>
+  <% @image_size = "50x50" %>
+
+  <a href="http://localhost:3000"><%= image_tag("home.png", :alt => "rss feed", :size => @image_size) %></a>
+    <!-- Images -->
+<%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size) %>
+  <%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size) %>
 </div>
 
 <br>
-<div id="print">
-<input type="button" value="Print this page" onClick="window.print()">
-</div>
-
 
 </center>
 <br>
@@ -119,21 +118,13 @@ width: 450px;
       document.getElementById("resultsTable").style.display = "none";      
     }
 	
-	else {
-	
-		document.getElementById("resultsTable").style.visibility = "visible";
-	
-	}
+	  else {
+		  document.getElementById("resultsTable").style.visibility = "visible";
+	  }
 	
   }
 
   window.onload = checkStatus;
-  
-  
- 
-  
-  
-  
 </script>
 
 
@@ -179,7 +170,7 @@ width: 450px;
     </style>
   </head>
   <body>
-    <%= link_to 'New Datum', new_datum_path %>
+    <%= link_to(image_tag("add.png", :size => "25x25"), new_datum_path) %>
     <br>
 
     <!-- Code for the table displaying the search results -->
@@ -219,7 +210,9 @@ width: 450px;
 	
 <br>
 <center>
-<h3>&#10068;<em>Need help? Please contact</em><a href ="CitySchoolsIT@bcps.k12.md.us"> <em>CitySchoolsIT@bcps.k12.md.us</em></h3>
+<%= image_tag("QM.png", :alt => "rss feed",:size => "30x30") %>
+    <%= "Need help? Please contact" %> 
+    <a href="mailto:CitySchoolIT@bcps.k.12.md.us">CitySchoolIT@bcps.k.12.md.us</a>
 </center>
 
 	
