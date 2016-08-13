@@ -12,6 +12,7 @@ header {
 
 #homepage {
 
+	position: absolute;
 	margin-right: 800px;
 	margin-top: -90px;
 	
@@ -60,13 +61,25 @@ width: 450px;
 }
 
 
+#Header {
+
+
+
+
+
+}
+
+
 
 </style>
 
 <!-- Makes title -->
 <header>
-   <h1>Baltimore City Public Schools</h1>
-   <h2>School Information Search</h2>
+<br>
+<div id="Header">
+   <h1><em>Baltimore City Public Schools</em></h1>
+   <h2><em>School Information Search</em></h2>
+</div>
 </header>
 
 <center>
@@ -84,7 +97,7 @@ width: 450px;
 
   <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: @selected }, id: "roll" %>
   <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
-  <%= submit_tag "Search", :name => nil %>
+  <%= button_tag "Search", :name => nil, id: "SearchButton" %>
 <% end %>
 
 <div id="homepage" >
@@ -203,6 +216,13 @@ width: 450px;
         </tr>
       <% end %>
     </table>
+	
+<br>
+<center>
+<h3>&#10068;<em>Need help? Please contact</em><a href ="CitySchoolsIT@bcps.k12.md.us"> <em>CitySchoolsIT@bcps.k12.md.us</em></h3>
+</center>
+
+	
   </body>
 </html>
 <br>
