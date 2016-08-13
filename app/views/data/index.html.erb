@@ -98,15 +98,15 @@ width: 450px;
 <% end %>
 
 <!-- Images and links "toolbar"-->
-<div id="homepage" onmouseover="" style="cursor: pointer;">
+<div id="homepage">
   <% @image_size = "50x50" %>
 
   <!-- Images -->
-  <a href="http://localhost:3000"><%= image_tag("home.png", :alt => "rss feed", :size => @image_size) %></a>
+  <a href="http://localhost:3000"><%= image_tag("home.png", :alt => "rss feed", :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %></a>
     
-  <%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size) %>
+  <%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %>
 
-  <%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size) %>
+  <%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size, :onmouseover => "this.style.cursor='pointer';") %>
 </div>
 
 <br>
@@ -180,6 +180,8 @@ width: 450px;
 
       <!-- prints the column names for top of the table -->
       
+    <% if @data.pluck("School Number").length > 0 %>
+         
       <tr>
       <th></th>
       <th></th>
@@ -209,6 +211,11 @@ width: 450px;
         </tr>
       <% end %>
     </table>
+  <% else %>
+    <center>
+      <%= "No Results Found." %>
+    </center>  
+  <% end %>    
 	
 <br>
 <center>
