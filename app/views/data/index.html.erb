@@ -12,22 +12,52 @@ header {
 
 #homepage {
 
-	margin-right: 450px;
-	margin-top: -30px;
+	margin-right: 800px;
+	margin-top: -90px;
 	
 
 }
 
+#searchBar {
+
+
+width: 450px;
+
+    padding: 15px;
+
+    margin: 150px auto 50px auto;
+
+    background: #444;
+
+    background: rgba(0,0,0,.2);
+
+    border-radius: 10px;
+
+    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+
+
+
+}
+
+
+#roll {
+
+	padding: 15px;
+
+    margin: 150px auto 50px auto;
+
+    background: #444;
+
+    background: rgba(0,0,0,.2);
+
+    border-radius: 10px;
+
+    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
 
 
 
 
-
-
-
-
-
-
+}
 
 
 
@@ -52,7 +82,7 @@ header {
     <% @selected = "" %>
   <% end %>
 
-  <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: @selected } %>
+  <%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: @selected }, id: "roll" %>
   <%= text_field_tag :search, params[:search], maxlength: 300, placeholder: "Search by any keyword or school number", id: "searchBar" %>
   <%= submit_tag "Search", :name => nil %>
 <% end %>
