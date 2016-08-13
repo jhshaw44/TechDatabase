@@ -1,8 +1,15 @@
 <p id="notice"><%= notice %></p>
 
+
 <!-- Makes background -->
 <body style="background-color:#D3D3D3;">
+
 <style>
+
+body {
+	
+}
+
 header {
     padding: 1em;
     color: black;
@@ -19,21 +26,28 @@ header {
    <h2>School Information Report</h2>
 </header>
 
+<!-- Back, Print, and CSV buttons -->
+<!-- Needed to put "back" button in link to get it to work" -->
+	<% @image_size = "75x75" %>
+	<a href="javascript:history.back()"><%= image_tag("back.png", :alt => "rss feed", :size => @image_size) %></a>
+	<%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size) %>
+	<%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size) %>
 
 <div class="boxed">
-<br>
-<input type="button" value="Print this page" onClick="window.print()">
 	
+
 	<!-- Add all search groups to an array -->
 	<% @search_groups = [] %>
 	<% @all_columns = [] %>
-	<% for i in 1..8 %> <!-- HARDCODED - WILL NEED TO CHANGE -->
-		<% @search_groups.push(SearchGroup.where(id: i).pluck(:group_name)[0]) %>
+	<% @num_groups = SearchGroup.pluck(:id).length %>
+
+	<% for i in 0..(@num_groups-1) %> 
+		<% @search_groups.push(SearchGroup.where(id: (i+1)).pluck(:group_name)[0]) %>
 	<% end %>
 	<% @search_groups[0] = "Overview" %>
-	<!-- Print each search group, in larger green text  -->
 	
-  	<% for i in 0..7 %> <!-- HARDCODED - WILL NEED TO CHANGE -->
+	<!-- Print each search group, in larger green text  -->
+  	<% for i in 0..(@num_groups-1) %> 
   		<p>
    			<strong>
    				<div class="categories">
@@ -41,32 +55,42 @@ header {
    				</div>	
    		</p>
    		<p>
-
    				<!-- Print all child columns and their data  -->
 				<!-- Child_columns is an array of (strings separated by commas) -->
 				<% @child_columns = [] %>
 				<% @child_columns = SearchGroup.where(id: i+1).pluck(:children_columns)[0].split(", ") %>
 
-
+				<!-- After printing each column per search group, print the data of that
+					 column by looking up the ID, plucking that row and taking the first
+					 element. Because ID's are unique, the will work for all searches. -->
 				<% @child_columns.each do |col| %>
 					<% if !@all_columns.include?(col) %>
  						<%= col + ": " %>
+ 						<%= Datum.where(id: params[:id]).pluck(col)[0] %>
  						<% @all_columns.push(col) %>	
  						<br>				
  					<% end %>			
-					<br>
+					
 				<% end %>
 		</p>
 	<% end %>	
-				
 </div> 
 
+
 <style>
+
+	.wrap {
+ 		display: flex;
+ 		flex-direction: column;
+ 		flex-wrap: wrap;
+ 		height: 700px; /*the height will need to be customized*/
+ 		width: 70px;
+	}
 	.boxed {
   		border: 1px solid green ;
   		border-radius: 5px;
   		background-color: white;
-  		font-size: 75%;
+  		font-size: 100%;
 	}	 
 
 	.categories {
@@ -75,10 +99,34 @@ header {
 		padding-left: 5px;
 	}
 	p {
-		line-height: 60%;
+		line-height: 135%;
 		padding-left: 5px;
 	}
 </style>
 
 <%= link_to 'Edit', edit_datum_path(@datum) %> |
-<%= link_to 'Back', data_path %>
+<!-- <%= link_to 'Back', data_path %> -->
+
+<div class="contact_us">
+	<p>
+		<%= image_tag("QM.png", :alt => "rss feed",:size => "30x30") %>
+		<%= "Need help? Please contact" %> 
+		<a href="mailto:CitySchoolIT@bcps.k.12.md.us">CitySchoolIT@bcps.k.12.md.us</a>
+	</p>
+
+	<style>
+	.contact_us {
+		display: block;
+		margin-left: auto;
+    	margin-right: auto;
+    	width: 25%;
+	}
+
+	p {
+		white-space: nowrap;
+	}
+	</style>
+</div>
+
+
+</body>
