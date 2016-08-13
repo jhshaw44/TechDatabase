@@ -35,18 +35,19 @@ header {
 
 <div class="boxed">
 	
-	<% @current_row = Datum.search(params[:id], Datum.column_names) %>
 
 	<!-- Add all search groups to an array -->
 	<% @search_groups = [] %>
 	<% @all_columns = [] %>
-	<% for i in 0..7 %> <!-- HARDCODED - WILL NEED TO CHANGE -->
+	<% @num_groups = SearchGroup.pluck(:id).length %>
+
+	<% for i in 0..(@num_groups-1) %> 
 		<% @search_groups.push(SearchGroup.where(id: (i+1)).pluck(:group_name)[0]) %>
 	<% end %>
 	<% @search_groups[0] = "Overview" %>
 	
 	<!-- Print each search group, in larger green text  -->
-  	<% for i in 0..7 %> <!-- HARDCODED - WILL NEED TO CHANGE -->
+  	<% for i in 0..(@num_groups-1) %> 
   		<p>
    			<strong>
    				<div class="categories">
