@@ -98,12 +98,14 @@ width: 450px;
 <% end %>
 
 <!-- Images and links "toolbar"-->
-<div id="homepage" >
+<div id="homepage" onmouseover="" style="cursor: pointer;">
   <% @image_size = "50x50" %>
 
+  <!-- Images -->
   <a href="http://localhost:3000"><%= image_tag("home.png", :alt => "rss feed", :size => @image_size) %></a>
-    <!-- Images -->
-<%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size) %>
+    
+  <%= image_tag("printer.png", :alt => "rss feed", :onClick => "window.print()".html_safe, :size => @image_size) %>
+
   <%= image_tag("CSV.png", :alt => "rss feed", :size => @image_size) %>
 </div>
 
