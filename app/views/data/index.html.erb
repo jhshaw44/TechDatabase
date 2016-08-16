@@ -175,14 +175,35 @@ width: 450px;
     <%= link_to(image_tag("add.png", :size => "25x25"), new_datum_path) %>
     <br>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Code for the table displaying the search results -->
+    <form name="myform" id="myform">
     <table id="resultsTable" border ="1" width =100% style="visibility:hidden" script="onload='checkStatus()'">
 
       <!-- prints the column names for top of the table -->
       
     <% if @data.pluck("School Number").length > 0 %>
          
-      <tr>
+      <tr id="Row">
       <th></th>
       <th></th>
       <th></th>
@@ -211,11 +232,88 @@ width: 450px;
         </tr>
       <% end %>
     </table>
+
+
+
+
+
+
+<!-- NEW -->
+<script>
+
+$(document).ready(function () {
+     $('#btnAdd').click(function () {
+         var count = 69,
+             first_row = $('#Row');
+         while (count-- > 69) first_row.clone().appendTo('#resultsTable');
+     });
+
+     
+     var myform = $('#myform'),
+         iter = 0;
+     $('#btnAddCol').click(function () {
+         myform.find('tr').each(function(){
+           var trow = $(this);
+             if(trow.index() === 0){
+                 trow.append('<td>Col'+iter+'</td>');
+             }else{
+                 trow.append('<td><input type="checkbox" name="cb'+iter+'"/></td>');
+             }
+            
+         });
+         iter += 1;
+     });
+ });
+
+</script>
+
+
+<!-- END OF NEW -->
+
+
+
+
+
+
+
+
+
+
+
+
+
   <% else %>
     <center>
       <%= "No Results Found." %>
     </center>  
-  <% end %>    
+  <% end %> 
+
+
+<!-- NEW -->
+<br>
+ <button type="button" id="btnAddCol">Add new column</button>
+    </br>
+    </br>
+    <input type="submit"></input>
+
+
+ 
+
+
+
+</form>
+
+<!-- END OF NEW -->
+
+
+
+
+
+
+
+
+
+
 	
 <br>
 <center>
