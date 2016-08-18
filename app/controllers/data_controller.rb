@@ -4,42 +4,38 @@ class DataController < ApplicationController
   # GET /data
   # GET /data.json
   def index
+    @columns = Datum.column_names
 
-	@columns = Datum.column_names
+    @data = nil
+    if params[:search]
 
-	@data = nil
-	if params[:search]
+      if params[:Search_Group]
 
-		if params[:Search_Group]
+        my_id = params[:Search_Group][:group_id]
 
-      my_id = params[:Search_Group][:group_id]
+        # if any of the groups are selected besides the blank
+        if my_id != ""
 
-      # if any of the groups are selected besides the blank
-			if my_id != ""
+          # look up the row with our ID, grab only the children columns, take the first index of the array, and then make an array out of the string
+          @columns = SearchGroup.where(id: my_id).pluck(:children_columns)[0].split(", ")
 
-        # look up the row with our ID, grab only the children columns, take the first index of the array, and then make an array out of the string
-        @columns = SearchGroup.where(id: my_id).pluck(:children_columns)[0].split(", ")
+        else				
+          @columns = Datum.column_names
+        end
+		  else
+        @columns = Datum.column_names
+		  end
 
-			else				
-				@columns = Datum.column_names
-			end
+		  # we never want to show the id, this is strictly for our database
+		  index = @columns.find_index("id")
+		  if index
+		    @columns.delete_at(index)
+		  end
 
-
-      #@columns = Datum.column_names
-		else
-			@columns = Datum.column_names
-		end
-
-		# we never want to show the id, this is strictly for our database
-		index = @columns.find_index("id")
-		if index
-			@columns.delete_at(index)
-		end
-
-		@data = Datum.search(params[:search], @columns)
-	else
-		@data = Datum.all
-	end
+		  @data = Datum.search(params[:search], @columns)
+    else
+        @data = Datum.all
+	  end
 	
   end
 
