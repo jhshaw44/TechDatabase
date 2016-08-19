@@ -13,12 +13,12 @@
 
   <% @columns = Datum.column_names %>
   <% @columns.each do |col| %>
-  <% display = "#{col}" %>
+    <% display = "#{col}" %>
 
-  <div class="field">
+    <div class="field">
       <%= f.label :display, display %><br>
       <%= f.text_field col %>
-  </div>
+    </div>
 
   <% end %>
 <br>

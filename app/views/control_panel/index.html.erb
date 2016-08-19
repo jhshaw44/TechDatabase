@@ -12,8 +12,36 @@
 	<br>
 	<br>
 
-	New Datum <%= link_to(image_tag("add.png", :size => "25x25"), new_datum_path) %>
+	<!-- CSS for search button image and text field -->
+  	<style>
+	    .search-img {
+	      position: absolute;
+	      width: 25px;
+	      height: 25px;
+	    }
+
+	    /*
+	    * Changes the text in the text field to be black. This is a short fix until the CSS is cleaned up 
+	    */
+	    .data-fields {
+	    	color:#000000;
+	    }
+  	</style>
+
+	New School
 	<br>
-	New Column <%= link_to(image_tag("add.png", :size => "25x25"), new_datum_path) %>
+	Add <%= link_to(image_tag("add.png", :size => "25x25"), new_datum_path) %>
+	<br><br><br>
+
+	<%= form_tag "/add_column", enforce_utf8: true do %>
+		New Column  
+		<br>  
+  		<%= text_field_tag :column_name, params[:column_name], maxlength: 300, placeholder: "Enter column name", required: true, id: "tfColumnName", class: "data-fields"  %>
+  		<br>
+  		Add to: 
+  		<%= collection_select :Search_Group, :group_id, SearchGroup.all.order(:group_name), :id, :group_name, { include_blank: 'School Profile', selected: @selected }, id: "roll", class: "data-fields" %>
+		&nbsp
+  		<%= image_submit_tag("add.png", :size => "25x25", id: "submitButton", class: "search-img") %>
+	<% end %>
 	<br>
 </html>
