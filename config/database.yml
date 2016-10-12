@@ -20,12 +20,12 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-  username: admin3lawhd1
-  password: SpwS91dHvSD7
+  username: qrnajppktuahbs
+  password: Rb9D3tziyL6H92g8y0-4LAP7SV
 
 development:
   <<: *default
-  database: TechDatabase_development
+  database: d3k0mt1vddmnr1
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: TechDatabase_test
+#  database: TechDatabase_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -82,6 +82,6 @@ test:
 #
 production:
   <<: *default
-  database: TechDatabase_production
+  database: d3k0mt1vddmnr1
 #  username: TechDatabase
 #  password: <%= ENV['TECHDATABASE_DATABASE_PASSWORD'] %>
